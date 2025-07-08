@@ -23,8 +23,9 @@ public class GeneralSearch implements Search<String> {
         results.addAll(StudyMaterial.getStudyMaterial().searchInMaterials(text));
         results.addAll(StudyTaskManager.getStudyTaskManager().searchInRegistries(text));
 
-        searchLog.recordSearch(text);
-        results.add(searchLog.getLogEntry());
+        searchLog.logSearch(text); // ✅ registrar busca corretamente
+        results.add("\nLogged in: " + searchLog.getLogName()); // ✅ adicionar entrada ao resultado
+
         return results;
     }
 

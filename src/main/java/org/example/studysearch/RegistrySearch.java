@@ -11,28 +11,16 @@ import java.util.List;
 public class RegistrySearch implements Search<String> {
     private SearchLog searchLog = new SearchLog("Registry Search");
 
-    public RegistrySearch() {}
+    public RegistrySearch(){}
 
     @Override
     public List<String> search(String text) {
-        return handleRegistrySearch(text);
+        return searchLog.searchWithLog(text);
     }
+
 
     public SearchLog getSearchLog() {
         return searchLog;
     }
 
-    private List<String> handleRegistrySearch(String text) {
-        List<String> results = new ArrayList<>();
-        results.addAll(CardManager.getCardManager().searchInCards(text));
-        results.addAll(HabitTracker.getHabitTracker().searchInHabits(text));
-        results.addAll(TodoTracker.getInstance().searchInTodos(text));
-        results.addAll(StudyTaskManager.getStudyTaskManager().searchInRegistries(text));
-
-        // ✅ Lógica de log delegada à própria classe
-        searchLog.logSearch(text);
-        results.add(searchLog.getLogEntry());
-
-        return results;
-    }
 }

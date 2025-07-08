@@ -6,20 +6,21 @@ import java.util.List;
 import java.util.Map;
 
 public class SearchLog {
-    private List<String> searchHistory;
-    private Map<String, Integer> searchCount;
+    private final List<String> searchHistory;
+    private final Map<String, Integer> searchCount;
     private boolean isLocked;
-    private Integer numUsages;
+    private int numUsages;
     private String logName;
 
     public SearchLog(String logName) {
-        searchHistory = new ArrayList<>();
-        searchCount = new HashMap<>();
+        this.searchHistory = new ArrayList<>();
+        this.searchCount = new HashMap<>();
         this.logName = logName;
-        numUsages = 0;
-        isLocked = false;
+        this.numUsages = 0;
+        this.isLocked = false;
     }
 
+    // ✅ NOVO método centralizado
     public String logSearch(String query) {
         if (isLocked) {
             return "[Log está bloqueado: não foi possível registrar query]";
@@ -30,26 +31,27 @@ public class SearchLog {
         return getLogEntry();
     }
 
-    public void addSearchHistory(String searchHistory) {
-        this.searchHistory.add(searchHistory);
+    // ✅ MÉTODOS LEGADOS (manter por enquanto)
+    public void addSearchHistory(String query) {
+        this.searchHistory.add(query);
     }
 
     public void recordSearch(String query) {
         addSearchHistory(query);
-        this.numUsages = this.numUsages + 1;
+        this.numUsages++;
     }
 
+    public void setNumUsages(int numUsages) {
+        this.numUsages = numUsages;
+    }
+
+    // Getters
     public List<String> getSearchHistory() {
         return searchHistory;
     }
-    public void setSearchHistory(List<String> searchHistory) {
-        this.searchHistory = searchHistory;
-    }
+
     public Map<String, Integer> getSearchCount() {
         return searchCount;
-    }
-    public void setSearchCount(Map<String, Integer> searchCount) {
-        this.searchCount = searchCount;
     }
 
     public boolean isLocked() {
@@ -60,12 +62,8 @@ public class SearchLog {
         isLocked = locked;
     }
 
-    public Integer getNumUsages() {
+    public int getNumUsages() {
         return numUsages;
-    }
-
-    public void setNumUsages(Integer numUsages) {
-        this.numUsages = numUsages;
     }
 
     public String getLogName() {
@@ -75,6 +73,7 @@ public class SearchLog {
     public void setLogName(String logName) {
         this.logName = logName;
     }
+
     public String getLogEntry() {
         return "\nLogged in: " + this.logName;
     }

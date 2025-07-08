@@ -113,12 +113,9 @@ public class StudyCardsController {
         }
     }
 
+    // ✅ Método mantido para o teste funcionar corretamente
     public String getRandomCardFromBox() {
-        String response = "";
-        response += leitnerSystem.getMethodName();
-        List<Box> boxes = leitnerSystem.getBoxes();
-        response += leitnerSystem.getRandomCard(boxes);
-        return response;
+        return leitnerSystem.getRandomCardFromBox();
     }
 
     public void handleGetRandomCardFromBox() {

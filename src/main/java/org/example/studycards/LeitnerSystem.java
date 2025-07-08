@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class LeitnerSystem extends StudyMethod{
+public class LeitnerSystem extends StudyMethod {
     List<Box> boxes = null;
+
     public LeitnerSystem(String methodName) {
         super(methodName);
         boxes = new ArrayList<>(Arrays.asList(new Box(), new Box(), new Box(), new Box(), new Box()));
@@ -42,26 +43,35 @@ public class LeitnerSystem extends StudyMethod{
     }
 
     public String getRandomCard(List<Box> otherBoxes){
-        if(otherBoxes == null){
-            return null;
+        if(otherBoxes == null || otherBoxes.isEmpty()){
+            return "No card found";
         }
-        if(otherBoxes.isEmpty()){
-            return null;
-        }
+
         Box allBoxes = new Box();
         for(Box box : otherBoxes){
             allBoxes.addCards(box.getCards());
         }
+
         Integer randomCard = allBoxes.getRandomCard();
         if(randomCard == null){
             return "No card found";
         }
+
         CardManager manager = CardManager.getCardManager();
         Card card = manager.getCard(randomCard);
-        String response = "["+ randomCard + "] ";
+        String response = "[" + randomCard + "] ";
         response += "The random question was: " + card.getQuestion() + " | ";
         response += "The answer is: " + card.getAnswer();
-        return  response;
+        return response;
+    }
+
+    // ✅ Método movido da controller para cá
+    public String getRandomCardFromBox() {
+        String response = "";
+        response += getMethodName();
+        List<Box> boxes = getBoxes();
+        response += getRandomCard(boxes);
+        return response;
     }
 
     public void addCardToBox(Integer id, Integer boxId) {
@@ -104,5 +114,4 @@ public class LeitnerSystem extends StudyMethod{
         refBox.removeCard(cardId);
         boxes.get(Math.max(boxId - 1, 0)).addCard(cardId);
     }
-
 }

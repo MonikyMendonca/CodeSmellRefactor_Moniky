@@ -1,53 +1,34 @@
 package org.example.studysearch;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class SearchLog {
-    private List<String> searchHistory;
-    private Map<String, Integer> searchCount;
-    private boolean isLocked;
-    private Integer numUsages;
+    private List<String> logs = new ArrayList<>();
+    private int numUsages = 0;
     private String logName;
 
+    public SearchLog() {
+        this.logName = "Default SearchLog";
+    }
+
     public SearchLog(String logName) {
-        searchHistory = new ArrayList<>();
-        searchCount = new HashMap<>();
         this.logName = logName;
-        numUsages = 0;
-        isLocked = false;
     }
-    public void addSearchHistory(String searchHistory) {
-        this.searchHistory.add(searchHistory);
+
+    public void addSearchHistory(String query) {
+        logs.add(query);
     }
+
     public List<String> getSearchHistory() {
-        return searchHistory;
-    }
-    public void setSearchHistory(List<String> searchHistory) {
-        this.searchHistory = searchHistory;
-    }
-    public Map<String, Integer> getSearchCount() {
-        return searchCount;
-    }
-    public void setSearchCount(Map<String, Integer> searchCount) {
-        this.searchCount = searchCount;
+        return logs;
     }
 
-    public boolean isLocked() {
-        return isLocked;
-    }
-
-    public void setLocked(boolean locked) {
-        isLocked = locked;
-    }
-
-    public Integer getNumUsages() {
+    public int getNumUsages() {
         return numUsages;
     }
 
-    public void setNumUsages(Integer numUsages) {
+    public void setNumUsages(int numUsages) {
         this.numUsages = numUsages;
     }
 
@@ -55,7 +36,17 @@ public class SearchLog {
         return logName;
     }
 
-    public void setLogName(String logName) {
-        this.logName = logName;
+    // Novo método para imprimir o log
+    public void printLog() {
+        if (logs.isEmpty()) {
+            System.out.println("No search logs available.");
+        } else {
+            System.out.println("Search logs:");
+            for (String logEntry : logs) {
+                System.out.println("- " + logEntry);
+            }
+        }
+        System.out.println("Number of usages: " + numUsages);
+        System.out.println("Log name: " + logName);
     }
 }

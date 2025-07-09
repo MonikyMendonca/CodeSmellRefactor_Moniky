@@ -5,10 +5,9 @@ import org.example.studyregistry.StudyMaterial;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MaterialSearch implements Search<String>{
+public class MaterialSearch implements Search<String> {
 
-
-    private SearchLog searchLog = new SearchLog("Material Search");
+    private SearchLog searchLog = new SearchLog(); // Usa o construtor sem argumentos
 
     public MaterialSearch() {}
 
@@ -24,10 +23,11 @@ public class MaterialSearch implements Search<String>{
     private List<String> handleMaterialSearch(String text){
         List<String> results = new ArrayList<>();
         results.addAll(StudyMaterial.getStudyMaterial().searchInMaterials(text));
+
+        // Usa apenas os métodos permitidos de SearchLog
         this.searchLog.addSearchHistory(text);
-        this.searchLog.setNumUsages(this.searchLog.getNumUsages() + 1);
-        results.add("\nLogged in: " + this.searchLog.getLogName());
+        results.add("\nSearch logged."); // Texto genérico, já que não há getLogName()
+
         return results;
     }
-
 }
